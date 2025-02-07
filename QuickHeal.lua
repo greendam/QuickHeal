@@ -1922,17 +1922,22 @@ local function CastCheckSpell()
     if class == "druid" then
         if HasRegrowthRank1() then
             -- Cast Regrowth if Rank 1 exists in spellbook
-            CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REGROWTH)[1].SpellID, BOOKTYPE_SPELL);
+            --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REGROWTH)[1].SpellID, BOOKTYPE_SPELL);
+			CastSpellByNameNoQueue("Regrowth(Rank 1)");
         else
             -- Fallback to Healing Touch
-            CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_TOUCH)[1].SpellID, BOOKTYPE_SPELL);
+            --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_TOUCH)[1].SpellID, BOOKTYPE_SPELL);
+			CastSpellByNameNoQueue("Healing Touch(Rank 1)");
         end
     elseif class == "paladin" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_LIGHT)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_LIGHT)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Holy Light(Rank 1)");
     elseif class == "priest" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_LESSER_HEAL)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_LESSER_HEAL)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Lesser Heal(Rank 1)");
     elseif class == "shaman" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Healing Wave(Rank 1)");
     end
 end
 
@@ -1942,11 +1947,14 @@ local function CastCheckSpellHOT()
 
     --QuickHeal_debug("********** BREAKPOINT: CastCheckSpellHOT() **********");
     if class == "druid" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REJUVENATION)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REJUVENATION)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Rejuvenation(Rank 1)")	
     elseif class == "paladin" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_SHOCK)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_SHOCK)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Holy Shock(Rank 1)")	
     elseif class == "priest" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_RENEW)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_RENEW)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Renew(Rank 1)")	
     --elseif class == "shaman" then
     --    CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
     end
