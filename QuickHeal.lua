@@ -1905,34 +1905,39 @@ function GetRotaSpell(class, maxhealth, healDeficit, type, forceMaxHPS, forceMax
 end
 
 
--- Check if Rejuvenation (Rank 1) is in the spellbook
-local function HasRejuvRank1()
+-- Check if Regrowth (Rank 1) is in the spellbook
+local function HasRegrowthRank1()
     for i = 1, MAX_SPELLS do
         local spellName, spellRank = GetSpellName(i, BOOKTYPE_SPELL);
-        if spellName == "Rejuvenation" and spellRank == "Rank 1" then
-            return true; -- Rejuvenation (Rank 1) found
+        if spellName == "Regrowth" and spellRank == "Rank 1" then
+            return true; -- Regrowth (Rank 1) found
         end
     end
-    return false; -- Rejuvenation (Rank 1) not found
+    return false; -- Regrowth (Rank 1) not found
 end
 
 local function CastCheckSpell()
     local _, class = UnitClass('player');
     class = string.lower(class);
     if class == "druid" then
-        if HasRejuvRank1() then
-            -- Cast Rejuvenation if Rank 1 exists in spellbook
-            CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REJUVENATION)[1].SpellID, BOOKTYPE_SPELL);
+        if HasRegrowthRank1() then
+            -- Cast Regrowth if Rank 1 exists in spellbook
+            --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REGROWTH)[1].SpellID, BOOKTYPE_SPELL);
+			CastSpellByNameNoQueue("Regrowth(Rank 1)");
         else
             -- Fallback to Healing Touch
-            CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_TOUCH)[1].SpellID, BOOKTYPE_SPELL);
+            --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_TOUCH)[1].SpellID, BOOKTYPE_SPELL);
+			CastSpellByNameNoQueue("Healing Touch(Rank 1)");
         end
     elseif class == "paladin" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_LIGHT)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_LIGHT)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Holy Light(Rank 1)");
     elseif class == "priest" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_LESSER_HEAL)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_LESSER_HEAL)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Lesser Heal(Rank 1)");
     elseif class == "shaman" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Healing Wave(Rank 1)");
     end
 end
 
@@ -1942,11 +1947,14 @@ local function CastCheckSpellHOT()
 
     --QuickHeal_debug("********** BREAKPOINT: CastCheckSpellHOT() **********");
     if class == "druid" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REJUVENATION)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_REJUVENATION)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Rejuvenation(Rank 1)")	
     elseif class == "paladin" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_SHOCK)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HOLY_SHOCK)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Holy Shock(Rank 1)")	
     elseif class == "priest" then
-        CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_RENEW)[1].SpellID, BOOKTYPE_SPELL);
+        --CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_RENEW)[1].SpellID, BOOKTYPE_SPELL);
+		CastSpellByNameNoQueue("Renew(Rank 1)")	
     --elseif class == "shaman" then
     --    CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
     end
@@ -3340,9 +3348,5 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-
-
-
-
 
 
