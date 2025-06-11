@@ -1916,6 +1916,26 @@ local function HasRegrowthRank1()
     end
     return false; -- Regrowth (Rank 1) not found
 end
+-- Check if Rejuvenation (Rank 1) is in the spellbook
+local function HasRejuvRank1()
+    for i = 1, MAX_SPELLS do
+        local spellName, spellRank = GetSpellName(i, BOOKTYPE_SPELL);
+        if spellName == "Rejuvenation" and spellRank == "Rank 1" then
+            return true; -- Rejuvenation (Rank 1) found
+        end
+    end
+    return false; -- Rejuvenation (Rank 1) not found
+end
+
+local function _CastSpell(spellID, spellbookType)
+    if has_pepo_nam then
+        local spellname, spellrank = GetSpellName(spellID, BOOKTYPE_SPELL);
+        local spell = spellname .. "("..spellrank .. ")";
+        CastSpellByNameNoQueue(spell);
+    else
+        CastSpell(spellID, spellbookType);
+    end
+end
 
 local function CastCheckSpell()
     local _, class = UnitClass('player');
