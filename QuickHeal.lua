@@ -1921,7 +1921,13 @@ local function CastCheckSpell()
     local _, class = UnitClass('player');
     class = string.lower(class);
     if class == "druid" then
-		CastSpellByNameNoQueue("Healing Touch(Rank 1)");
+        if HasRejuvRank1() then
+            -- Cast Rejuvenation if Rank 1 exists in spellbook
+           CastSpellByNameNoQueue("Rejuvenation(Rank 1)");
+        else
+            -- Fallback to Healing Touch
+            CastSpellByNameNoQueue("Healing Touch(Rank 1)");
+        end
     elseif class == "paladin" then
 		CastSpellByNameNoQueue("Holy Light(Rank 1)");
     elseif class == "priest" then
