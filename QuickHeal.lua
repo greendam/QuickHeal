@@ -3185,15 +3185,15 @@ end
 function QuickHOT(Target, SpellID, extParam, forceMaxRank, noHpCheck)
 
     -- Only one instance of QuickHeal allowed at a time
-    --if QuickHealBusy then
-        --if HealingTarget and MassiveOverhealInProgress then
-            --QuickHeal_debug("Massive overheal aborted.");
-            --SpellStopCasting();
-        --else
-            --QuickHeal_debug("Healing in progress, command ignored");
-        --end
+    if QuickHealBusy then
+        if HealingTarget and MassiveOverhealInProgress then
+            QuickHeal_debug("Massive overheal aborted.");
+            SpellStopCasting();
+        else
+            QuickHeal_debug("Healing in progress, command ignored");
+        end
         --return ;
-    --end
+    end
 
     QuickHealBusy = true;
     local AutoSelfCast = GetCVar("autoSelfCast");
