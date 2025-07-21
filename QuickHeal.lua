@@ -66,6 +66,8 @@ local DQHV = { -- Default values
     SkipList = { }
 }
 
+local has_pepo_nam = pcall(GetCVar, "NP_QueueCastTimeSpells")
+
 local me = UnitName('player')
 local TWA_Roster = { };
 local QH_RequestedTWARoster = false;
@@ -1914,6 +1916,16 @@ local function HasRejuvRank1()
         end
     end
     return false; -- Rejuvenation (Rank 1) not found
+end
+
+local function _CastSpell(spellID, spellbookType)
+    if has_pepo_nam then
+        local spellname, spellrank = GetSpellName(spellID, BOOKTYPE_SPELL);
+        local spell = spellname .. "("..spellrank .. ")";
+        CastSpellByNameNoQueue(spell);
+    else
+        CastSpell(spellID, spellbookType);
+    end
 end
 
 local function CastCheckSpell()
