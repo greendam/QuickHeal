@@ -60,7 +60,7 @@ function QuickHeal_Paladin_FindSpellToUse(Target, healType, multiplier, forceMax
 
     if QuickHeal_UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatin for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         if Overheal then
             healneed = healneed * multiplier;
         else
@@ -329,7 +329,7 @@ function QuickHeal_Paladin_FindHoTSpellToUse(Target, healType, forceMaxRank)
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatio for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -434,7 +434,7 @@ function QuickHeal_Paladin_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, hea
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatio for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -650,5 +650,6 @@ function QuickHeal_Command_Paladin(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
