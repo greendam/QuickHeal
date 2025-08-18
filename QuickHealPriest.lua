@@ -45,7 +45,7 @@ function QuickHeal_Priest_FindHealSpellToUse(Target, healType, multiplier, force
 
     if QuickHeal_UnitHasHealthInfo(Target) then
     -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatin for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target) ; -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         if Overheal then
             healneed = healneed * multiplier;
         else
@@ -939,5 +939,6 @@ function QuickHeal_Command_Priest(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
