@@ -130,7 +130,7 @@ function QuickHeal_Priest_FindHealSpellToUse(Target, healType, multiplier, force
     healneed = healneed/HDB;
 
     -- Get a list of ranks available for all spells
-    local SpellIDsLH = QuickHeal_GetSpellIDs(QUICKHEAL_SPELL_HEAL);
+    local SpellIDsLH = QuickHeal_GetSpellIDs(QUICKHEAL_SPELL_LESSER_HEAL);
     local SpellIDsH  = QuickHeal_GetSpellIDs(QUICKHEAL_SPELL_HEAL);
     local SpellIDsGH = QuickHeal_GetSpellIDs(QUICKHEAL_SPELL_GREATER_HEAL);
     local SpellIDsFH = QuickHeal_GetSpellIDs(QUICKHEAL_SPELL_FLASH_HEAL);
@@ -939,4 +939,5 @@ function QuickHeal_Command_Priest(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
