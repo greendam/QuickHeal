@@ -1,3 +1,5 @@
+If you want to help, here is my paypal : [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/sebpoirot)
+
 
 # QuickHeal Turtle WOW
 
@@ -159,5 +161,6 @@ Druid healing improvements & Shaman chainheal fix.
 - Paladin : Holy Shock is now usable while moving
 - Druid : Improved regrowth is taken in account for Regrowth effectiveness
 - Druid : /script QuickHeal(nil,'Swiftmend') now works while moving
+
 
 
