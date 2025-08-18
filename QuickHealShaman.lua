@@ -73,11 +73,12 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
 
     -- Calculate healing bonus
     local healModLHW = (1.5/3.5) * Bonus;
+    local healModCH = 0.6142 * Bonus;    
     local healMod15 = (1.5/3.5) * Bonus;
     local healMod20 = (2.0/3.5) * Bonus;
     local healMod25 = (2.5/3.5) * Bonus;
     local healMod30 = (3.0/3.5) * Bonus;
-    debug("Final Healing Bonus (1.5,2.0,2.5,3.0,LHW)", healMod15,healMod20,healMod25,healMod30,healModLHW);
+    debug("Final Healing Bonus (1.5,2.0,2.5,3.0,CH,LHW)", healMod15,healMod20,healMod25,healMod30,healModCH,healModLHW);
 
     local InCombat = UnitAffectingCombat('player') or UnitAffectingCombat(Target);
 
@@ -148,14 +149,14 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
 
     if not forceMaxRank then
         SpellID = SpellIDsCH[1]; HealSize = 356+healMod25;
-        --if healneed > (356*hwMod+healMod25) and ManaLeft >= 260 *tfMod and maxRankCH >=1 and SpellIDsCH[1] then SpellID = SpellIDsCH[1]; HealSize = 356*hwMod+healMod25 end
-        if healneed > (898*hwMod+healMod25) and ManaLeft >= 315 *tfMod and maxRankCH >=2 and SpellIDsCH[2] then SpellID = SpellIDsCH[2]; HealSize = 449*hwMod+healMod25 end
-        if healneed > (1213*hwMod+healMod25) and ManaLeft >= 405 *tfMod and maxRankCH >=3 and SpellIDsCH[3] then SpellID = SpellIDsCH[3]; HealSize = 607*hwMod+healMod25 end
+        --if healneed > (356*hwMod+healModCH)*K and ManaLeft >= 260 *tfMod and maxRankCH >=1 and SpellIDsCH[1] then SpellID = SpellIDsCH[1]; HealSize = 356*hwMod+healModCH end
+        if healneed > (898*hwMod+healModCH)*K and ManaLeft >= 315 *tfMod and maxRankCH >=2 and SpellIDsCH[2] then SpellID = SpellIDsCH[2]; HealSize = 449*hwMod+healModCH end
+        if healneed > (1213*hwMod+healModCH)*K and ManaLeft >= 405 *tfMod and maxRankCH >=3 and SpellIDsCH[3] then SpellID = SpellIDsCH[3]; HealSize = 607*hwMod+healModCH end
     else
         SpellID = SpellIDsCH[3]; HealSize = 607*hwMod+healMod25;
-        --if ManaLeft >= 260 *tfMod and maxRankCH >=1 and SpellIDsCH[1] then SpellID = SpellIDsCH[1]; HealSize = 356+healMod25 end
-        --if ManaLeft >= 315 *tfMod and maxRankCH >=2 and SpellIDsCH[2] then SpellID = SpellIDsCH[2]; HealSize = 449+healMod25 end
-        --if ManaLeft >= 405 *tfMod and maxRankCH >=3 and SpellIDsCH[3] then SpellID = SpellIDsCH[3]; HealSize = 607+healMod25 end
+        --if ManaLeft >= 260 *tfMod and maxRankCH >=1 and SpellIDsCH[1] then SpellID = SpellIDsCH[1]; HealSize = 356+healModCH end
+        --if ManaLeft >= 315 *tfMod and maxRankCH >=2 and SpellIDsCH[2] then SpellID = SpellIDsCH[2]; HealSize = 449+healModCH end
+        --if ManaLeft >= 405 *tfMod and maxRankCH >=3 and SpellIDsCH[3] then SpellID = SpellIDsCH[3]; HealSize = 607+healModCH end
     end
 
     --SpellID = SpellIDsCH[3];
@@ -618,3 +619,4 @@ function QuickHeal_Command_Shaman(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
