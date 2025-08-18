@@ -166,5 +166,8 @@ Druid healing improvements & Shaman chainheal fix.
 - Paladin : Removal of Daybreak which is no longer a heal multiplier in last Turtle Wow patch
 - Druid : Talent changes to fit 1.18
 - Priest : No changes in last Turtle Wow patch for quickheal
+- Shaman : Healing way now affects CH/HW and also LHW, after healing power
+- All : Healcom doesn't autocancel heals anymore (many complains about this mechanic)
+
 
 
