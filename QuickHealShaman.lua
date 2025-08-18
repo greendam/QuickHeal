@@ -56,7 +56,7 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementation for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -208,7 +208,7 @@ function QuickHeal_Shaman_FindHealSpellToUse(Target, healType, multiplier, force
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatio for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -621,5 +621,6 @@ function QuickHeal_Command_Shaman(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
