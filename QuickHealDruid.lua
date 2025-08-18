@@ -63,7 +63,7 @@ function QuickHeal_Druid_FindHealSpellToUse(Target, healType, multiplier, forceM
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatio for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -450,7 +450,7 @@ function QuickHeal_Druid_FindHoTSpellToUse(Target, healType, forceMaxRank)
     local Health;
     if UnitHasHealthInfo(Target) then
         -- Full info available
-        healneed = UnitHealthMax(Target) - UnitHealth(Target) - HealComm:getHeal(UnitName(Target)); -- Implementatio for HealComm
+        healneed = UnitHealthMax(Target) - UnitHealth(Target); -- Here you can integrate HealComm by adding "- HealComm:getHeal(UnitName(Target))" (this can autocancel your heals even when you don't want)
         Health = UnitHealth(Target) / UnitHealthMax(Target);
     else
         -- Estimate target health
@@ -895,4 +895,5 @@ function QuickHeal_Command_Druid(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
