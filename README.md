@@ -162,5 +162,9 @@ Druid healing improvements & Shaman chainheal fix.
 - Druid : Improved regrowth is taken in account for Regrowth effectiveness
 - Druid : /script QuickHeal(nil,'Swiftmend') now works while moving
 
+  **1.2**<Br>
+- Paladin : Removal of Daybreak which is no longer a heal multiplier in last Turtle Wow patch
+- Druid : Talent changes to fit 1.18
+- Priest : No changes in last Turtle Wow patch for quickheal
 
 
