@@ -456,47 +456,47 @@ end
 HealComm.Spells = {
 	[L["Holy Light"]] = {
 		[1] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (44*hlMod+(((2.5/3.5) * SpellPower)*0.1))
 		end;
 		[2] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (88*hlMod+(((2.5/3.5) * SpellPower)*0.224))
 		end;
 		[3] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (174*hlMod+(((2.5/3.5) * SpellPower)*0.476))
 		end;
 		[4] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (334*hlMod+((2.5/3.5) * SpellPower))
 		end;
 		[5] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (522*hlMod+((2.5/3.5) * SpellPower))
 		end;
 		[6] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (740*hlMod+((2.5/3.5) * SpellPower))
 		end;
 		[7] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (1000*hlMod+((2.5/3.5) * SpellPower))
 		end;
 		[8] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (1318*hlMod+((2.5/3.5) * SpellPower))
 		end;
 		[9] = function (SpellPower)
-			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
+			local _,_,_,_,talentRank,_ = GetTalentInfo(1,6)
 			local hlMod = 4*talentRank/100 + 1
 			return (1681*hlMod+((2.5/3.5) * SpellPower))
 		end;
@@ -508,9 +508,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -523,9 +523,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -538,9 +538,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -553,9 +553,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -568,9 +568,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -583,9 +583,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -598,9 +598,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == 	L["Libram of Divinity"] then
-					lp = 53
+					lp = 28
 				elseif name == L["Libram of Light"] then
-					lp = 83
+					lp = 41
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(1,5)
@@ -667,9 +667,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -682,9 +682,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -697,9 +697,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -712,9 +712,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -727,9 +727,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -742,9 +742,9 @@ HealComm.Spells = {
 				local _,_,itemstring = string.find(GetInventoryItemLink("player",GetInventorySlotInfo("RangedSlot")), "|H(.+)|h")
 				local name = GetItemInfo(itemstring)
 				if name == L["Totem of Sustaining"] then
-					tp = 53
+					tp = 28
 				elseif name == L["Totem of Life"] then
-					tp = 80
+					tp = 40
 				end
 			end
 			local _,_,_,_,talentRank,_ = GetTalentInfo(3,14)
@@ -776,7 +776,7 @@ HealComm.Spells = {
 			local sgMod = Spirit * 5*talentRank/100
 			local _,_,_,_,talentRank2,_ = GetTalentInfo(2,15)
 			local shMod = 6*talentRank2/100 + 1
-			return (53+((1.5/3.5) * (SpellPower+sgMod))*0.19)*shMod
+			return (+((1.5/3.5) * (SpellPower+sgMod))*0.19)*shMod
 		end;
 		[2] = function (SpellPower)
 			local _,_,_,_,talentRank,_ = GetTalentInfo(2,12)
