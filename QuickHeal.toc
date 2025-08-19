@@ -16,7 +16,8 @@ libs\AceConsole-2.0\AceConsole-2.0.lua
 libs\AceAddon-2.0\AceAddon-2.0.lua
 libs\AceDebug-2.0\AceDebug-2.0.lua
 libs\AceLocale-2.2\AceLocale-2.2.lua
-
+libs\Gratuity-2.0\Gratuity-2.0.lua
+libs\Deformat-2.0\Deformat-2.0.lua
 libs\RosterLib-2.0\RosterLib-2.0.lua
 libs\ItemBonusLib-1.0\Locales\deDE.lua
 libs\ItemBonusLib-1.0\Locales\enUS.lua
@@ -29,4 +30,5 @@ libs\HealComm-1.0\HealComm-1.0.lua
 
 QuickHeal.xml
 HealingBar.xml
+
 
