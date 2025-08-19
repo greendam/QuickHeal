@@ -21,7 +21,7 @@ local OriginalUIErrorsFrame_OnEvent;
 QuickHealVariables = {};
 QHV = { }; -- global alias
 local DQHV = { -- Default values
-    DebugMode = false,
+    DebugMode = true,
     PetPriority = 1,
     TargetPriority = false,
     RatioForceself = 0.4,
@@ -66,7 +66,7 @@ local DQHV = { -- Default values
     SkipList = { }
 }
 
-local has_pepo_nam = pcall(GetCVar, "NP_QueueCastTimeSpells")
+local has_pepo_nam = pcall(GetCVar, "NP_QueueCastTimeSpells")															 
 
 local me = UnitName('player')
 local TWA_Roster = { };
@@ -81,6 +81,7 @@ local BlackList = {}; -- List of times were the players are no longer blackliste
 local LastBlackListTime = 0;
 local HealMultiplier = 1.0;
 local PlayerClass = string.lower(UnitClass('player'));
+local stopCastCooldown = 0
 
 --[ Keybinding ]--
 BINDING_HEADER_QUICKHEAL = "QuickHeal";
@@ -1173,6 +1174,7 @@ local function StartMonitor(Target, multiplier)
     QuickHealConfig:RegisterEvent("SPELLCAST_STOP"); -- For detecting spellcast stop
     QuickHealConfig:RegisterEvent("SPELLCAST_FAILED"); -- For detecting spellcast stop
     QuickHealConfig:RegisterEvent("SPELLCAST_INTERRUPTED"); -- For detecting spellcast stop
+    QuickHealConfig:RegisterEvent("SPELL_QUEUE_EVENT"); -- For detecting spellcast queue
     UpdateQuickHealOverhealStatus();
     if QHV.OverhealMessageCastingBar then
         QuickHealOverhealStatus:Show()
@@ -1193,6 +1195,7 @@ local function StopMonitor(trigger)
     QuickHealConfig:UnregisterEvent("SPELLCAST_STOP");
     QuickHealConfig:UnregisterEvent("SPELLCAST_FAILED");
     QuickHealConfig:UnregisterEvent("SPELLCAST_INTERRUPTED");
+    QuickHealConfig:UnregisterEvent("SPELL_QUEUE_EVENT");
     QuickHeal_debug("*Stopping Monitor", trigger or "Unknown Trigger");
     HealingTarget = nil;
     HealMultiplier = 1.0;
@@ -1907,13 +1910,21 @@ function GetRotaSpell(class, maxhealth, healDeficit, type, forceMaxHPS, forceMax
 end
 
 
+-- Check if Regrowth (Rank 1) is in the spellbook
+local function HasRegrowthRank1()
+	local spellId = GetSpellIdForName("Regrowth(Rank 1)");
+    if spellId > 0 then
+		return true; -- Regrowth (Rank 1) found
+    end
+    return false; -- Regrowth (Rank 1) not found
+end
 -- Check if Rejuvenation (Rank 1) is in the spellbook
 local function HasRejuvRank1()
-    for i = 1, MAX_SPELLS do
-        local spellName, spellRank = GetSpellName(i, BOOKTYPE_SPELL);
-        if spellName == "Rejuvenation" and spellRank == "Rank 1" then
-            return true; -- Rejuvenation (Rank 1) found
-        end
+    local spellId = GetSpellIdForName("Rejuvenation(Rank 1)");
+																	 
+    if spellId > 0 then
+		return true; -- Rejuvenation (Rank 1) found
+		   
     end
     return false; -- Rejuvenation (Rank 1) not found
 end
@@ -1946,6 +1957,40 @@ local function CastCheckSpell()
     elseif class == "shaman" then
         CastSpell(QuickHeal_GetSpellInfo(QUICKHEAL_SPELL_HEALING_WAVE)[1].SpellID, BOOKTYPE_SPELL);
     end
+end
+
+local function CastCheckSpell2()
+	local _, class = UnitClass('player');
+    class = string.lower(class);
+    local spellName;
+    if class == "druid" then
+        if HasRejuvRank1() then
+            -- Cast Rejuvenation if Rank 1 exists in spellbook
+            spellName = "Rejuvenation(Rank 1)";
+        else
+			-- Fallback to Healing Touch
+            spellName = "Healing Touch(Rank 1)";
+        end
+    elseif class == "paladin" then
+		spellName = "Holy Light(Rank 1)";
+    elseif class == "priest" then
+		spellName = "Lesser Heal(Rank 1)";
+    elseif class == "shaman" then
+		spellName = "Healing Wave(Rank 1)";
+    end
+	local targetValid = false
+
+
+	if UnitIsHealable("target", true) then
+		local inRange = IsSpellInRange(spellName, "target");
+
+		if inRange == 1 then
+			local inSight = UnitXP("camera", "target", "target");
+			if inSight == true then
+				targetValid = true
+			end
+		end
+	end
 end
 
 local function CastCheckSpellHOT()
@@ -2058,16 +2103,26 @@ local function FindWhoToHeal(Restrict, extParam)
     end
 
     -- Cast the checkspell
-    CastCheckSpell();
-    if not SpellIsTargeting() then
+    --CastCheckSpell();
+    
+    --if not SpellIsTargeting() then
         -- Reacquire target if it was cleared
-        if TargetWasCleared then
-            TargetLastTarget();
-        end
+        --if TargetWasCleared then
+            --TargetLastTarget();
+        --end
         -- Reinsert the PlaySound
-        PlaySound = OldPlaySound;
-        return false;
-    end
+        --PlaySound = OldPlaySound;
+        --return false;
+    --end
+    
+    CastCheckSpell2();
+	if not targetValid then
+		if TargetWasCleared then
+			TargetLastTarget();
+		end
+		PlaySound = OldPlaySound
+		return false
+	end
 
     -- Examine Healable Players
     for unit, i in playerIds do
@@ -2608,10 +2663,26 @@ local function ExecuteHeal(Target, SpellID)
 
     QuickHeal_debug("  Casting: " .. SpellNameAndRank .. " on " .. UnitFullName(Target) .. " (" .. Target .. ")" .. ", ID: " .. SpellID);
 
-    -- Clear any pending spells
-    if SpellIsTargeting() then
-        SpellStopTargeting()
+	local castingInterruptableSpell = true
+
+    -- if nampower available, check if we are actually casting something
+    -- to avoid needlessly calling SpellStopCasting and wiping spell queue
+    if GetCurrentCastingInfo then
+        local _, _, _, casting, channeling = GetCurrentCastingInfo();
+        if casting == 0 and channeling == 0 then
+            castingInterruptableSpell = false
+        end
     end
+
+    if castingInterruptableSpell and stopCastCooldown <= 0 then
+        SpellStopCasting()
+        stopCastCooldown = 0.2
+    end
+
+    -- Clear any pending spells
+    --if SpellIsTargeting() then
+        --SpellStopTargeting()
+    --end
 
     -- Cast the spell
     CastSpell(SpellID, BOOKTYPE_SPELL);
@@ -2703,10 +2774,25 @@ local function ExecuteHOT(Target, SpellID)
 
     QuickHeal_debug("  Casting: " .. SpellNameAndRank .. " on " .. UnitFullName(Target) .. " (" .. Target .. ")" .. ", ID: " .. SpellID);
 
-    -- Clear any pending spells
-    if SpellIsTargeting() then
-        SpellStopTargeting()
+	local castingInterruptableSpell = true
+
+    -- if nampower available, check if we are actually casting something
+    -- to avoid needlessly calling SpellStopCasting and wiping spell queue
+    if GetCurrentCastingInfo then
+        local _, _, _, casting, channeling = GetCurrentCastingInfo();
+        if casting == 0 and channeling == 0 then
+            castingInterruptableSpell = false
+        end
     end
+
+    if castingInterruptableSpell and stopCastCooldown <= 0 then
+        SpellStopCasting()
+        stopCastCooldown = 0.2
+    end
+    -- Clear any pending spells
+    --if SpellIsTargeting() then
+        --SpellStopTargeting()
+    --end
 
     -- Cast the spell
     CastSpell(SpellID, BOOKTYPE_SPELL);
@@ -2767,11 +2853,11 @@ function QuickChainHeal(Target, SpellID, extParam, forceMaxRank)
     if QuickHealBusy then
         if HealingTarget and MassiveOverhealInProgress then
             QuickHeal_debug("Massive overheal aborted.");
-            SpellStopCasting();
+            --SpellStopCasting();
         else
             QuickHeal_debug("Healing in progress, command ignored");
         end
-        return ;
+        --return ;
     end
 
     QuickHealBusy = true;
@@ -2960,11 +3046,11 @@ function QuickHeal(Target, SpellID, extParam, forceMaxHPS)
     if QuickHealBusy then
         if HealingTarget and MassiveOverhealInProgress then
             QuickHeal_debug("Massive overheal aborted.");
-            SpellStopCasting();
+            --SpellStopCasting();
         else
             QuickHeal_debug("Healing in progress, command ignored");
         end
-        return ;
+        --return ;
     end
 
     QuickHealBusy = true;
