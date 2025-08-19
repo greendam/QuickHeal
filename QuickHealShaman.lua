@@ -64,11 +64,11 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
         Health = UnitHealth(Target)/100;
     end
 
-    -- if BonusScanner is running, get +Healing bonus
-    local Bonus = 0;
-    if (BonusScanner) then
-        Bonus = tonumber(BonusScanner:GetBonus("HEAL"));
-        debug(string.format("Equipment Healing Bonus: %d", Bonus));
+    local Bonus = 0
+    if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
+        local itemBonus = AceLibrary("ItemBonusLib-1.0")
+        Bonus = itemBonus:GetBonus("HEAL") or 0
+        debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Calculate healing bonus
@@ -216,11 +216,11 @@ function QuickHeal_Shaman_FindHealSpellToUse(Target, healType, multiplier, force
         Health = UnitHealth(Target)/100;
     end
 
-    -- if BonusScanner is running, get +Healing bonus
-    local Bonus = 0;
-    if (BonusScanner) then
-        Bonus = tonumber(BonusScanner:GetBonus("HEAL"));
-        debug(string.format("Equipment Healing Bonus: %d", Bonus));
+    local Bonus = 0
+    if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
+        local itemBonus = AceLibrary("ItemBonusLib-1.0")
+        Bonus = itemBonus:GetBonus("HEAL") or 0
+        debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Calculate healing bonus
@@ -370,11 +370,11 @@ function QuickHeal_Shaman_FindHealSpellToUseNoTarget(maxhealth, healDeficit, hea
     local healneed = healDeficit * multiplier;
     local Health = healDeficit / maxhealth;
 
-    -- if BonusScanner is running, get +Healing bonus
-    local Bonus = 0;
-    if (BonusScanner) then
-        Bonus = tonumber(BonusScanner:GetBonus("HEAL"));
-        debug(string.format("Equipment Healing Bonus: %d", Bonus));
+    local Bonus = 0
+    if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
+        local itemBonus = AceLibrary("ItemBonusLib-1.0")
+        Bonus = itemBonus:GetBonus("HEAL") or 0
+        debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Calculate healing bonus
@@ -621,6 +621,7 @@ function QuickHeal_Command_Shaman(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
 
