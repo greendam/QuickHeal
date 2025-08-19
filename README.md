@@ -11,7 +11,6 @@ QuickHeal gives healers fast access to all of their direct healing spells for he
 ## Installation
 - Download QuickHeal from this repository into your Interface folder and remove the "-main" in the folder name
 - Download HealComm (better to anticipate other heals) from here https://github.com/Bestoriop/HealComm
-- Download Bonusscanner (Makes QuickHeal and HealComm more accurate by taking gear and +Heal into account) : https://github.com/GryllsAddons/BonusScanner
 
 ## Usage
 
@@ -162,7 +161,9 @@ Druid healing improvements & Shaman chainheal fix.
 - Druid : Talent changes to fit 1.18
 - Priest : No changes in last Turtle Wow patch for quickheal
 - Shaman : Healing way now affects CH/HW and also LHW, after healing power
-- All : Healcom doesn't autocancel heals anymore (many complains about this mechanic)
+- Misc : Healcom doesn't autocancel heals anymore (many complains about this mechanic)
+- Misc : Bonusscanner no longer necessary (itembonuslib does the job)
+
 
 
 
