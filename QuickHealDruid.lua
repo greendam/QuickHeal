@@ -108,13 +108,6 @@ function QuickHeal_Druid_FindHealSpellToUse(Target, healType, multiplier, forceM
     local _,_,_,_,talentRank,_ = GetTalentInfo(3,14);
     local iregMod = 5*talentRank/100 + 1;
     debug(string.format("Improved Regrowth talentmodification: %f", iregMod))
-   
-    -- Genesis -- Increases Rejuvenation effects by 5% per rank
-    --local _,_,_,_,talentRank,_ = GetTalentInfo(3,7); 
-    --local genMod = 5*talentRank/100 + 1;
-    --debug(string.format("Genesis modifier: %f", genMod));
-
-
 
     local TargetIsHealthy = Health >= RatioHealthy;
     local ManaLeft = UnitMana('player');
@@ -150,12 +143,6 @@ function QuickHeal_Druid_FindHealSpellToUse(Target, healType, multiplier, forceM
         ForceHTinCombat = true;
     end
 
-    -- Detect Nature's Grace (next nature spell is hasted by 0.5 seconds)
-    --if QuickHeal_DetectBuff('player',"Spell_Nature_NaturesBlessing") and healneed < ((219*gonMod+healMod25*PF14)*2.8) and
-    --        not QuickHeal_DetectBuff('player',"Spell_Nature_Regenerate") then
-    --    ManaLeft = 110*tsMod*mgMod;
-    --end
-
     if QuickHeal_DetectBuff('player',"Spell_Nature_NaturesBlessing") then
         NaturesGrace = true;
     end
@@ -170,11 +157,9 @@ function QuickHeal_Druid_FindHealSpellToUse(Target, healType, multiplier, forceM
     -- Get a list of ranks available for all spells
     local SpellIDsHT = GetSpellIDs(QUICKHEAL_SPELL_HEALING_TOUCH);
     local SpellIDsRG = GetSpellIDs(QUICKHEAL_SPELL_REGROWTH);
-    --local SpellIDsRJ = GetSpellIDs(QUICKHEAL_SPELL_REJUVENATION);
 
     local maxRankHT = table.getn(SpellIDsHT);
     local maxRankRG = table.getn(SpellIDsRG);
-    --local maxRankRJ = table.getn(SpellIDsRJ);
     
     debug(string.format("Found HT up to rank %d, RG up to rank %d", maxRankHT, maxRankRG));
 
@@ -313,10 +298,6 @@ function QuickHeal_Druid_FindHealSpellToUseNoTarget(maxhealth, healDeficit, heal
     local iregMod = 5*talentRank/100 + 1;
     debug(string.format("Improved Regrowth talentmodification: %f", iregMod))
 
-    -- Genesis -- Increases Rejuvenation effects by 5% per rank
-    --local _,_,_,_,talentRank,_ = GetTalentInfo(3,7);
-    --local genMod = 5*talentRank/100 + 1;
-    --debug(string.format("Genesis modifier: %f", genMod));
 
     local TargetIsHealthy = Health >= RatioHealthy;
     local ManaLeft = UnitMana('player');
@@ -388,11 +369,6 @@ function QuickHeal_Druid_FindHealSpellToUseNoTarget(maxhealth, healDeficit, heal
         K=0.8;
     end
 
-    --if UnitLevel('player') < 60 then
-    --    print('f:QuickHeal_Druid_FindHealSpellToUseNoTarget --you are not 60');
-    --else
-    --    print('f:QuickHeal_Druid_FindHealSpellToUseNoTarget --you are 60');
-    --end
 
     if not forceMaxHPS then
         SpellID = SpellIDsHT[1]; HealSize = (44+healMod15*PF1)*gonMod; -- Default to rank 1
@@ -481,11 +457,6 @@ function QuickHeal_Druid_FindHoTSpellToUse(Target, healType, forceMaxRank)
     local gonMod = 2*talentRank/100 + 1;
     debug(string.format("Gift of Nature modifier: %f", gonMod));
 
-    -- Tranquil Spirit - Decreases mana usage by 2% per rank on HT and RG
-    local _,_,_,_,talentRank,_ = GetTalentInfo(3,10);
-    local tsMod = 1 - 2*talentRank/100;
-    debug(string.format("Tranquil Spirit modifier: %f", tsMod));
-
     -- Moonglow - Decrease mana usage by 3% per rank
     local _,_,_,_,talentRank,_ = GetTalentInfo(1,13);
     local mgMod = 1 - 3*talentRank/100;
@@ -564,16 +535,16 @@ function QuickHeal_Druid_FindHoTSpellToUse(Target, healType, forceMaxRank)
         --if Health > QuickHealVariables.RatioHealthyPriest then
         if not forceMaxRank then
             SpellID = SpellIDsRJ[1]; HealSize = (32+healMod15)*genMod*gonMod; -- Default to Renew(Rank 1)
-            if healneed > (56+gonMod+healMod15)*genMod*gonMod*k and ManaLeft >= 155 and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
-            if healneed > (116+healMod15)*genMod*gonMod*k and ManaLeft >= 185 and maxRankRJ >=3 and SpellIDsRJ[3] then SpellID = SpellIDsRJ[3]; HealSize = (116+healMod15)*genMod*gonMod end
-            if healneed > (180+healMod15)*genMod*gonMod*k and ManaLeft >= 215 and maxRankRJ >=4 and SpellIDsRJ[4] then SpellID = SpellIDsRJ[4]; HealSize = (180+healMod15)*genMod*gonMod end
-            if healneed > (244+healMod15)*genMod*gonMod*k and ManaLeft >= 265 and maxRankRJ >=5 and SpellIDsRJ[5] then SpellID = SpellIDsRJ[5]; HealSize = (244+healMod15)*genMod*gonMod end
-            if healneed > (304+healMod15)*genMod*gonMod*k and ManaLeft >= 315 and maxRankRJ >=6 and SpellIDsRJ[6] then SpellID = SpellIDsRJ[6]; HealSize = (304+healMod15)*genMod*gonMod end
-            if healneed > (388+healMod15)*genMod*gonMod*k and ManaLeft >= 380 and maxRankRJ >=7 and SpellIDsRJ[7] then SpellID = SpellIDsRJ[7]; HealSize = (388+healMod15)*genMod*gonMod end
-            if healneed > (488+healMod15)*genMod*gonMod*k and ManaLeft >= 455 and maxRankRJ >=8 and SpellIDsRJ[8] then SpellID = SpellIDsRJ[8]; HealSize = (488+healMod15)*genMod*gonMod end
-            if healneed > (688+healMod15)*genMod*gonMod*k and ManaLeft >= 545 and maxRankRJ >=9 and SpellIDsRJ[9] then SpellID = SpellIDsRJ[9]; HealSize = (608+healMod15)*genMod*gonMod end
-            if healneed > (756+healMod15)*genMod*gonMod*k and ManaLeft >= 655 and maxRankRJ >=10 and SpellIDsRJ[10] then SpellID = SpellIDsRJ[10]; HealSize = (756+healMod15)*genMod*gonMod end
-            if healneed > (888+healMod15)*genMod*gonMod*k and ManaLeft >= 655 and maxRankRJ >=11 and SpellIDsRJ[11] then SpellID = SpellIDsRJ[11]; HealSize = (888+healMod15)*genMod*gonMod end
+            if healneed > (56+gonMod+healMod15)*genMod*gonMod*k and ManaLeft >= 40 and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
+            if healneed > (116+healMod15)*genMod*gonMod*k and ManaLeft >= 75*mgMod and maxRankRJ >=3 and SpellIDsRJ[3] then SpellID = SpellIDsRJ[3]; HealSize = (116+healMod15)*genMod*gonMod end
+            if healneed > (180+healMod15)*genMod*gonMod*k and ManaLeft >= 105*mgMod and maxRankRJ >=4 and SpellIDsRJ[4] then SpellID = SpellIDsRJ[4]; HealSize = (180+healMod15)*genMod*gonMod end
+            if healneed > (244+healMod15)*genMod*gonMod*k and ManaLeft >= 135*mgMod and maxRankRJ >=5 and SpellIDsRJ[5] then SpellID = SpellIDsRJ[5]; HealSize = (244+healMod15)*genMod*gonMod end
+            if healneed > (304+healMod15)*genMod*gonMod*k and ManaLeft >= 160*mgMod and maxRankRJ >=6 and SpellIDsRJ[6] then SpellID = SpellIDsRJ[6]; HealSize = (304+healMod15)*genMod*gonMod end
+            if healneed > (388+healMod15)*genMod*gonMod*k and ManaLeft >= 195*mgMod and maxRankRJ >=7 and SpellIDsRJ[7] then SpellID = SpellIDsRJ[7]; HealSize = (388+healMod15)*genMod*gonMod end
+            if healneed > (488+healMod15)*genMod*gonMod*k and ManaLeft >= 235*mgMod and maxRankRJ >=8 and SpellIDsRJ[8] then SpellID = SpellIDsRJ[8]; HealSize = (488+healMod15)*genMod*gonMod end
+            if healneed > (688+healMod15)*genMod*gonMod*k and ManaLeft >= 280*mgMod and maxRankRJ >=9 and SpellIDsRJ[9] then SpellID = SpellIDsRJ[9]; HealSize = (608+healMod15)*genMod*gonMod end
+            if healneed > (756+healMod15)*genMod*gonMod*k and ManaLeft >= 335*mgMod and maxRankRJ >=10 and SpellIDsRJ[10] then SpellID = SpellIDsRJ[10]; HealSize = (756+healMod15)*genMod*gonMod end
+            if healneed > (888+healMod15)*genMod*gonMod*k and ManaLeft >= 360*mgMod and maxRankRJ >=11 and SpellIDsRJ[11] then SpellID = SpellIDsRJ[11]; HealSize = (888+healMod15)*genMod*gonMod end
         else
             SpellID = SpellIDsRJ[11]; HealSize = (888+healMod15)*genMod*gonMod
             if maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
@@ -651,11 +622,6 @@ function QuickHeal_Druid_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, healT
     local gonMod = 2*talentRank/100 + 1;
     debug(string.format("Gift of Nature modifier: %f", gonMod));
 
-    -- Tranquil Spirit - Decreases mana usage by 2% per rank on HT and RG
-    local _,_,_,_,talentRank,_ = GetTalentInfo(3,10);
-    local tsMod = 1 - 2*talentRank/100;
-    debug(string.format("Tranquil Spirit modifier: %f", tsMod));
-
     -- Moonglow - Decrease mana usage by 3% per rank
     local _,_,_,_,talentRank,_ = GetTalentInfo(1,13);
     local mgMod = 1 - 3*talentRank/100;
@@ -727,16 +693,16 @@ function QuickHeal_Druid_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, healT
     --end
 
     SpellID = SpellIDsRJ[1]; HealSize = (32+healMod15)*genMod*gonMod; -- Default to Renew(Rank 1)
-    if healneed > (56+healMod15)*genMod*gonMod*k and ManaLeft >= 155 and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
-    if healneed > (116+healMod15)*genMod*gonMod*k and ManaLeft >= 185 and maxRankRJ >=3 and SpellIDsRJ[3] then SpellID = SpellIDsRJ[3]; HealSize = (116+healMod15)*genMod*gonMod end
-    if healneed > (180+healMod15)*genMod*gonMod*k and ManaLeft >= 215 and maxRankRJ >=4 and SpellIDsRJ[4] then SpellID = SpellIDsRJ[4]; HealSize = (180+healMod15)*genMod*gonMod end
-    if healneed > (244+healMod15)*genMod*gonMod*k and ManaLeft >= 265 and maxRankRJ >=5 and SpellIDsRJ[5] then SpellID = SpellIDsRJ[5]; HealSize = (244+healMod15)*genMod*gonMod end
-    if healneed > (304+healMod15)*genMod*gonMod*k and ManaLeft >= 315 and maxRankRJ >=6 and SpellIDsRJ[6] then SpellID = SpellIDsRJ[6]; HealSize = (304+healMod15)*genMod*gonMod end
-    if healneed > (388+healMod15)*genMod*gonMod*k and ManaLeft >= 380 and maxRankRJ >=7 and SpellIDsRJ[7] then SpellID = SpellIDsRJ[7]; HealSize = (388+healMod15)*genMod*gonMod end
-    if healneed > (488+healMod15)*genMod*gonMod*k and ManaLeft >= 455 and maxRankRJ >=8 and SpellIDsRJ[8] then SpellID = SpellIDsRJ[8]; HealSize = (488+healMod15)*genMod*gonMod end
-    if healneed > (688+healMod15)*genMod*gonMod*k and ManaLeft >= 545 and maxRankRJ >=9 and SpellIDsRJ[9] then SpellID = SpellIDsRJ[9]; HealSize = (608+healMod15)*genMod*gonMod end
-    if healneed > (756+healMod15)*genMod*gonMod*k and ManaLeft >= 655 and maxRankRJ >=10 and SpellIDsRJ[10] then SpellID = SpellIDsRJ[10]; HealSize = (756+healMod15)*genMod*gonMod end
-    if healneed > (888+healMod15)*genMod*gonMod*k and ManaLeft >= 655 and maxRankRJ >=11 and SpellIDsRJ[11] then SpellID = SpellIDsRJ[11]; HealSize = (888+healMod15)*genMod*gonMod end
+    if healneed > (56+healMod15)*genMod*gonMod*k and ManaLeft >= 40*mgMod and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
+    if healneed > (116+healMod15)*genMod*gonMod*k and ManaLeft >= 75*mgMod and maxRankRJ >=3 and SpellIDsRJ[3] then SpellID = SpellIDsRJ[3]; HealSize = (116+healMod15)*genMod*gonMod end
+    if healneed > (180+healMod15)*genMod*gonMod*k and ManaLeft >= 105*mgMod and maxRankRJ >=4 and SpellIDsRJ[4] then SpellID = SpellIDsRJ[4]; HealSize = (180+healMod15)*genMod*gonMod end
+    if healneed > (244+healMod15)*genMod*gonMod*k and ManaLeft >= 135*mgMod and maxRankRJ >=5 and SpellIDsRJ[5] then SpellID = SpellIDsRJ[5]; HealSize = (244+healMod15)*genMod*gonMod end
+    if healneed > (304+healMod15)*genMod*gonMod*k and ManaLeft >= 160*mgMod and maxRankRJ >=6 and SpellIDsRJ[6] then SpellID = SpellIDsRJ[6]; HealSize = (304+healMod15)*genMod*gonMod end
+    if healneed > (388+healMod15)*genMod*gonMod*k and ManaLeft >= 195*mgMod and maxRankRJ >=7 and SpellIDsRJ[7] then SpellID = SpellIDsRJ[7]; HealSize = (388+healMod15)*genMod*gonMod end
+    if healneed > (488+healMod15)*genMod*gonMod*k and ManaLeft >= 235*mgMod and maxRankRJ >=8 and SpellIDsRJ[8] then SpellID = SpellIDsRJ[8]; HealSize = (488+healMod15)*genMod*gonMod end
+    if healneed > (688+healMod15)*genMod*gonMod*k and ManaLeft >= 280*mgMod and maxRankRJ >=9 and SpellIDsRJ[9] then SpellID = SpellIDsRJ[9]; HealSize = (608+healMod15)*genMod*gonMod end
+    if healneed > (756+healMod15)*genMod*gonMod*k and ManaLeft >= 335*mgMod and maxRankRJ >=10 and SpellIDsRJ[10] then SpellID = SpellIDsRJ[10]; HealSize = (756+healMod15)*genMod*gonMod end
+    if healneed > (888+healMod15)*genMod*gonMod*k and ManaLeft >= 360m*mgMod and maxRankRJ >=11 and SpellIDsRJ[11] then SpellID = SpellIDsRJ[11]; HealSize = (888+healMod15)*genMod*gonMod end
 
 
     return SpellID,HealSize*hdb;
@@ -895,6 +861,7 @@ function QuickHeal_Command_Druid(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
 
