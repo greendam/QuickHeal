@@ -948,9 +948,9 @@ local function Initialise()
         FindHealSpellToUseNoTarget = QuickHeal_Shaman_FindHealSpellToUseNoTarget;
         GetRatioHealthyExplanation = QuickHeal_Shaman_GetRatioHealthyExplanation;
         QuickHealDownrank_Slider_NH:SetMinMaxValues(1,10);
-        --QuickHealDownrank_Slider_NH:SetValue(10);
+        QuickHealDownrank_Slider_NH:SetValue(10);
         QuickHealDownrank_Slider_FH:SetMinMaxValues(1,6);
-        --QuickHealDownrank_Slider_FH:SetValue(6);
+        QuickHealDownrank_Slider_FH:SetValue(6);
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Shaman;
         SLASH_QUICKHEAL1 = "/qh";
         SLASH_QUICKHEAL2 = "/quickheal";
@@ -972,13 +972,13 @@ local function Initialise()
         -- convert default (priest) downrank window to Paladin with only FH Slider shown
         QuickHealDownrank_Slider_NH:Hide();
         QuickHealDownrank_RankNumberTop:Hide();
-        QuickHealDownrank_MarkerTop:Hide()
-        QuickHealDownrank_MarkerBot:Hide()
-        QuickHeal_DownrankSlider:SetHeight(40)
-        QuickHealDownrank_Slider_FH:SetPoint("TOPLEFT", 20, -10)
+        QuickHealDownrank_MarkerTop:Hide();
+        QuickHealDownrank_MarkerBot:Hide();
+        QuickHeal_DownrankSlider:SetHeight(40);
+        QuickHealDownrank_Slider_FH:SetPoint("TOPLEFT", 20, -10);
         QuickHealDownrank_Slider_FH:SetMinMaxValues(1,7);
-        --QuickHealDownrank_Slider_FH:SetValue(7)
-        QuickHealDownrank_RankNumberBot:SetPoint("CENTER", 108, 1)
+        QuickHealDownrank_Slider_FH:SetValue(7);
+        QuickHealDownrank_RankNumberBot:SetPoint("CENTER", 108, 1);
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Paladin;
         SLASH_QUICKHEAL1 = "/qh";
         SLASH_QUICKHEAL2 = "/quickheal";
@@ -989,9 +989,9 @@ local function Initialise()
         FindHoTSpellToUseNoTarget = QuickHeal_Druid_FindHoTSpellToUseNoTarget;
         GetRatioHealthyExplanation = QuickHeal_Druid_GetRatioHealthyExplanation;
         QuickHealDownrank_Slider_NH:SetMinMaxValues(1,11);
-        --QuickHealDownrank_Slider_NH:SetValue(11)
+        QuickHealDownrank_Slider_NH:SetValue(11);
         QuickHealDownrank_Slider_FH:SetMinMaxValues(1,9);
-        --QuickHealDownrank_Slider_FH:SetValue(9)
+        QuickHealDownrank_Slider_FH:SetValue(9);
 
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Druid;
         SLASH_QUICKHEAL1 = "/qh";
@@ -3352,6 +3352,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+
 
 
 
