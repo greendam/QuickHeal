@@ -89,21 +89,8 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
 
     local TargetIsHealthy = Health >= RatioHealthy;
     local ManaLeft = UnitMana('player');
-
     if TargetIsHealthy then
         debug("Target is healthy",Health)
-    end
-
-    -- Detect Nature's Swiftness (next nature spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Nature_RavenForm") then
-        debug("BUFF: Nature's Swiftness (out of combat healing forced)");
-        InCombat = false;
-    end
-
-    -- Detect proc of 'Hand of Edward the Odd' mace (next spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Holy_SearingLight") then
-        debug("BUFF: Hand of Edward the Odd (out of combat healing forced)");
-        InCombat = false;
     end
 
     -- Get total healing modifier (factor) caused by healing target debuffs
@@ -120,12 +107,6 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
     local SpellIDsCH = GetSpellIDs(QUICKHEAL_SPELL_CHAIN_HEAL);
     local maxRankCH = table.getn(SpellIDsCH);
 
-    --local SpellIDsHW = GetSpellIDs(QUICKHEAL_SPELL_HEALING_WAVE);
-    --local SpellIDsLHW = GetSpellIDs(QUICKHEAL_SPELL_LESSER_HEALING_WAVE);
-    --local maxRankHW = table.getn(SpellIDsHW);
-    --local maxRankLHW = table.getn(SpellIDsLHW);
-    --local NoLHW = maxRankLHW < 1;
-
 
     -- DEBUG display GetSpellIDs table
     debug(string.format("Found CH up to rank %d", maxRankCH))
@@ -133,19 +114,9 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
         debug('GetSpellIDs:' .. index .. ':' .. data)
     end
 
-    --Get max HealRanks that are allowed to be used (we haven't implemented this)
-    --local downRankCH = QuickHealVariables.DownrankValueCH -- rank for 1.5 sec heals
-    --
-    --local downRankFH = QuickHealVariables.DownrankValueFH -- rank for 1.5 sec heals
-    --local downRankNH = QuickHealVariables.DownrankValueNH -- rank for < 1.5 sec heals
-
-    -- DEBUG force InCombat to always true
-    --InCombat = true;
-
     -- Find suitable SpellID based on the defined criteria
-    ---prefers chain heal rank one
     local k = 0.9; -- In combat means that target is losing life while casting, so compensate
-    local K = 0.8; -- k for fast spells (LHW and HW Rank 1 and 2) and K for slow spells (HW)
+    local K = 0.8; -- k for fast spells (LHW and HW Rank 1 and 2) and K for slow spells (HW and CH)
 
     if not forceMaxRank then
         SpellID = SpellIDsCH[1]; HealSize = 356+healMod25;
@@ -158,9 +129,6 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
         --if ManaLeft >= 315 *tfMod and maxRankCH >=2 and SpellIDsCH[2] then SpellID = SpellIDsCH[2]; HealSize = (449+healModCH)*hwMod end
         --if ManaLeft >= 405 *tfMod and maxRankCH >=3 and SpellIDsCH[3] then SpellID = SpellIDsCH[3]; HealSize = (607+healModCH)*hwMod end
     end
-
-    --SpellID = SpellIDsCH[3];
-    --HealSize = 0;
 
     debug(string.format("about to print spellid.  HealSize:%d", HealSize))
     debug(string.format("wow SpellID:%s HealSize:%s", SpellID, HealSize))
@@ -277,8 +245,8 @@ function QuickHeal_Shaman_FindHealSpellToUse(Target, healType, multiplier, force
     debug(string.format("Found HW up to rank %d, and found LHW up to rank %d", maxRankHW, maxRankLHW))
 
     --Get max HealRanks that are allowed to be used
-    local downRankFH = QuickHealVariables.DownrankValueFH -- rank for 1.5 sec heals
-    local downRankNH = QuickHealVariables.DownrankValueNH -- rank for < 1.5 sec heals
+    local downRankFH = QuickHealVariables.DownrankValueFH -- rank for LHW
+    local downRankNH = QuickHealVariables.DownrankValueNH -- rank for HW
 
     -- Find suitable SpellID based on the defined criteria
     if InCombat then
@@ -291,9 +259,7 @@ function QuickHeal_Shaman_FindHealSpellToUse(Target, healType, multiplier, force
             local k = 0.9; -- In combat means that target is losing life while casting, so compensate
             local K = 0.8; -- k for fast spells (LHW and HW Rank 1 and 2) and K for slow spells (HW)
             if maxRankLHW >=1 and SpellIDsLHW[1] then SpellID = SpellIDsLHW[1]; HealSize = (174+healModLHW)*hwMod else SpellID = SpellIDsHW[1]; HealSize = (39+healMod15*PF1)*hwMod end -- Default to HW or LHW
-            --if healneed > (71+healMod20*PF6)*hwMod*k and ManaLeft >= 45*tfMod and maxRankHW >=2 and downRankNH >=2 and NoLHW and SpellIDsHW[2] then SpellID = SpellIDsHW[2]; HealSize =  (71+healMod20*PF6)*hwMod end
             if healneed > (71+healMod20*PF6)*hwMod*k and ManaLeft >= 45*tfMod and maxRankHW >=2 and downRankNH >=2 and SpellIDsHW[2] then SpellID = SpellIDsHW[2]; HealSize =  (71+healMod20*PF6)*hwMod end
-            --if healneed > (142+healMod25*PF12)*hwMod*K and ManaLeft >= 80*tfMod and maxRankHW >=3 and downRankNH >=3 and NoLHW and SpellIDsHW[3] then SpellID = SpellIDsHW[3]; HealSize = (142+healMod25*PF12)*hwMod end
             if healneed > (142+healMod25*PF12)*hwMod*K and ManaLeft >= 80*tfMod and maxRankHW >=3 and downRankNH >=3 and SpellIDsHW[3] then SpellID = SpellIDsHW[3]; HealSize = (142*hwMod+healMod25*PF12)*hwMod end
             if healneed > (174+healModLHW)*hwMod*k and ManaLeft >= 105*tfMod and maxRankLHW >=1 and downRankFH >=1 and SpellIDsLHW[1] then SpellID = SpellIDsLHW[1]; HealSize = (174+healModLHW)*hwMod end
             if healneed > (264+healModLHW)*hwMod*k and ManaLeft >= 145*tfMod and maxRankLHW >=2 and downRankFH >=2 and SpellIDsLHW[2] then SpellID = SpellIDsLHW[2]; HealSize = (264+healModLHW)*hwMod end
@@ -431,16 +397,14 @@ function QuickHeal_Shaman_FindHealSpellToUseNoTarget(maxhealth, healDeficit, hea
     debug(string.format("Found HW up to rank %d, and found LHW up to rank %d", maxRankHW, maxRankLHW))
 
     --Get max HealRanks that are allowed to be used
-    local downRankFH = QuickHealVariables.DownrankValueFH -- rank for 1.5 sec heals
-    local downRankNH = QuickHealVariables.DownrankValueNH -- rank for < 1.5 sec heals
+    local downRankFH = QuickHealVariables.DownrankValueFH -- rank for LHW
+    local downRankNH = QuickHealVariables.DownrankValueNH -- rank for HW
 
     if forceMaxHPS then
         local k = 0.9; -- In combat means that target is losing life while casting, so compensate
         local K = 0.8; -- k for fast spells (LHW and HW Rank 1 and 2) and K for slow spells (HW)
         if maxRankLHW >=1 and SpellIDsLHW[1] then SpellID = SpellIDsLHW[1]; HealSize = (174+healModLHW)*hwMod else SpellID = SpellIDsHW[1]; HealSize = (39+healMod15*PF1)*hwMod end -- Default to HW or LHW
-        --if healneed > ( 71+healMod20*PF6)*hwMod*k and ManaLeft >= 45*tfMod and maxRankHW >=2 and downRankNH >=2 and NoLHW and SpellIDsHW[2] then SpellID = SpellIDsHW[2]; HealSize =  (71+healMod20*PF6)*hwMod end
         if healneed > ( 71+healMod20*PF6)*hwMod*k and ManaLeft >= 45*tfMod and maxRankHW >=2 and downRankNH >=2 and SpellIDsHW[2] then SpellID = SpellIDsHW[2]; HealSize =  (71+healMod20*PF6)*hwMod end
-        --if healneed > (142+healMod25*PF12)*hwMod*K and ManaLeft >= 80*tfMod and maxRankHW >=3 and downRankNH >=3 and NoLHW and SpellIDsHW[3] then SpellID = SpellIDsHW[3]; HealSize = (142+healMod25*PF12)*hwMod end
         if healneed > ( 142+healMod25*PF12)*hwMod*K and ManaLeft >= 80*tfMod and maxRankHW >=3 and downRankNH >=3 and SpellIDsHW[3] then SpellID = SpellIDsHW[3]; HealSize = (142+healMod25*PF12)*hwMod end
         if healneed > (174+healModLHW)*hwMod*k and ManaLeft >= 105*tfMod and maxRankLHW >=1 and downRankFH >=1 and SpellIDsLHW[1] then SpellID = SpellIDsLHW[1]; HealSize = (174+healModLHW)*hwMod end
         if healneed > (264+healModLHW)*hwMod*k and ManaLeft >= 145*tfMod and maxRankLHW >=2 and downRankFH >=2 and SpellIDsLHW[2] then SpellID = SpellIDsLHW[2]; HealSize = (264+healModLHW)*hwMod end
@@ -478,10 +442,6 @@ function QuickHeal_Shaman_FindHealSpellToUseNoTarget(maxhealth, healDeficit, hea
 end
 
 function QuickHeal_Command_Shaman(msg)
-
-    --if PlayerClass == "priest" then
-    --  writeLine("SHAMAN", 0, 1, 0);
-    --end
 
     local _, _, arg1, arg2, arg3 = string.find(msg, "%s?(%w+)%s?(%w+)%s?(%w+)")
 
@@ -621,6 +581,7 @@ function QuickHeal_Command_Shaman(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
 
