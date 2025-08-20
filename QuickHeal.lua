@@ -976,7 +976,7 @@ local function Initialise()
         QuickHealDownrank_MarkerBot:Hide()
         QuickHeal_DownrankSlider:SetHeight(40)
         QuickHealDownrank_Slider_FH:SetPoint("TOPLEFT", 20, -10)
-        QuickHealDownrank_Slider_FH:SetMinMaxValues(1, 7);
+        QuickHealDownrank_Slider_FH:SetMinMaxValues(1,7);
         --QuickHealDownrank_Slider_FH:SetValue(7)
         QuickHealDownrank_RankNumberBot:SetPoint("CENTER", 108, 1)
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Paladin;
@@ -990,7 +990,7 @@ local function Initialise()
         GetRatioHealthyExplanation = QuickHeal_Druid_GetRatioHealthyExplanation;
         QuickHealDownrank_Slider_NH:SetMinMaxValues(1,11);
         --QuickHealDownrank_Slider_NH:SetValue(11)
-        QuickHealDownrank_Slider_FH:SetMinMaxValues(1, 9);
+        QuickHealDownrank_Slider_FH:SetMinMaxValues(1,9);
         --QuickHealDownrank_Slider_FH:SetValue(9)
 
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Druid;
@@ -3352,6 +3352,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+
 
 
 
