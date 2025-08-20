@@ -977,7 +977,7 @@ local function Initialise()
         QuickHeal_DownrankSlider:SetHeight(40)
         QuickHealDownrank_Slider_FH:SetPoint("TOPLEFT", 20, -10)
         QuickHealDownrank_Slider_FH:SetMinMaxValues(1, 7);
-        QuickHealDownrank_Slider_FH:SetValue(7)
+        --QuickHealDownrank_Slider_FH:SetValue(7)
         QuickHealDownrank_RankNumberBot:SetPoint("CENTER", 108, 1)
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Paladin;
         SLASH_QUICKHEAL1 = "/qh";
@@ -989,9 +989,9 @@ local function Initialise()
         FindHoTSpellToUseNoTarget = QuickHeal_Druid_FindHoTSpellToUseNoTarget;
         GetRatioHealthyExplanation = QuickHeal_Druid_GetRatioHealthyExplanation;
         QuickHealDownrank_Slider_NH:SetMinMaxValues(1,11);
-        QuickHealDownrank_Slider_NH:SetValue(3)
+        --QuickHealDownrank_Slider_NH:SetValue(11)
         QuickHealDownrank_Slider_FH:SetMinMaxValues(1, 9);
-        QuickHealDownrank_Slider_FH:SetValue(6)
+        --QuickHealDownrank_Slider_FH:SetValue(9)
 
         SlashCmdList["QUICKHEAL"] = QuickHeal_Command_Druid;
         SLASH_QUICKHEAL1 = "/qh";
@@ -3352,6 +3352,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
+
 
 
 
