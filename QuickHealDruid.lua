@@ -481,18 +481,6 @@ function QuickHeal_Druid_FindHoTSpellToUse(Target, healType, forceMaxRank)
         debug("BUFF: Clearcasting (Omen of Clarity)");
     end
 
-    -- Detect Nature's Swiftness (next nature spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Nature_RavenForm") then
-        debug("BUFF: Nature's Swiftness (out of combat healing forced)");
-        InCombat = false;
-    end
-
-    -- Detect proc of 'Hand of Edward the Odd' mace (next spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Holy_SearingLight") then
-        debug("BUFF: Hand of Edward the Odd (out of combat healing forced)");
-        InCombat = false;
-    end
-
     -- Get total healing modifier (factor) caused by healing target debuffs
     local HDB = QuickHeal_GetHealModifier(Target);
     debug("Target debuff healing modifier",HDB);
@@ -517,25 +505,12 @@ function QuickHeal_Druid_FindHoTSpellToUse(Target, healType, forceMaxRank)
         K=0.8;
     end
 
-    QuickHeal_debug(string.format("healneed: %f  target: %s  healType: %s  forceMaxRank: %s", healneed, Target, healType, tostring(forceMaxRank)));
-
-    --return SpellIDsRJ[1], (32+healMod15)*genMod*gonMod;
-
-    --if UnitLevel('player') < 60 then
-    --    print('f:QuickHeal_Druid_FindHoTSpellToUse --you are not 60');
-    --else
-    --    print('f:QuickHeal_Druid_FindHoTSpellToUse --you are 60');
-    --end
 
     if healType == "hot" then
-        --QuickHeal_debug(string.format("Spiritual Healing modifier: %f", shMod));
-        --SpellID = SpellIDsR[1]; HealSize = 215*shMod+healMod15; -- Default to Renew
 
-        --if Health < QuickHealVariables.RatioFull then
-        --if Health > QuickHealVariables.RatioHealthyPriest then
         if not forceMaxRank then
             SpellID = SpellIDsRJ[1]; HealSize = (32+healMod15)*genMod*gonMod; -- Default to Renew(Rank 1)
-            if healneed > (56+gonMod+healMod15)*genMod*gonMod*k and ManaLeft >= 40 and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
+            if healneed > (56+gonMod+healMod15)*genMod*gonMod*k and ManaLeft >= 40*mgMod and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
             if healneed > (116+healMod15)*genMod*gonMod*k and ManaLeft >= 75*mgMod and maxRankRJ >=3 and SpellIDsRJ[3] then SpellID = SpellIDsRJ[3]; HealSize = (116+healMod15)*genMod*gonMod end
             if healneed > (180+healMod15)*genMod*gonMod*k and ManaLeft >= 105*mgMod and maxRankRJ >=4 and SpellIDsRJ[4] then SpellID = SpellIDsRJ[4]; HealSize = (180+healMod15)*genMod*gonMod end
             if healneed > (244+healMod15)*genMod*gonMod*k and ManaLeft >= 135*mgMod and maxRankRJ >=5 and SpellIDsRJ[5] then SpellID = SpellIDsRJ[5]; HealSize = (244+healMod15)*genMod*gonMod end
@@ -646,17 +621,6 @@ function QuickHeal_Druid_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, healT
         debug("BUFF: Clearcasting (Omen of Clarity)");
     end
 
-    -- Detect Nature's Swiftness (next nature spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Nature_RavenForm") then
-        debug("BUFF: Nature's Swiftness (out of combat healing forced)");
-        InCombat = false;
-    end
-
-    -- Detect proc of 'Hand of Edward the Odd' mace (next spell is instant cast)
-    if QuickHeal_DetectBuff('player',"Spell_Holy_SearingLight") then
-        debug("BUFF: Hand of Edward the Odd (out of combat healing forced)");
-        InCombat = false;
-    end
 
     -- Get total healing modifier (factor) caused by healing target debuffs
     --local HDB = QuickHeal_GetHealModifier(Target);
@@ -682,15 +646,6 @@ function QuickHeal_Druid_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, healT
         K=0.8;
     end
 
-    --QuickHeal_debug(string.format("healneed: %f  target: %s  healType: %s  forceMaxRank: %s", healneed, Target, healType, tostring(forceMaxRank)));
-
-    --return SpellIDsRJ[1], (32+healMod15)*genMod*gonMod;
-
-    --if UnitLevel('player') < 60 then
-    --    print('f:QuickHeal_Druid_FindHoTSpellToUseNoTarget --you are not 60');
-    --else
-    --    print('f:QuickHeal_Druid_FindHoTSpellToUseNoTarget --you are 60');
-    --end
 
     SpellID = SpellIDsRJ[1]; HealSize = (32+healMod15)*genMod*gonMod; -- Default to Renew(Rank 1)
     if healneed > (56+healMod15)*genMod*gonMod*k and ManaLeft >= 40*mgMod and maxRankRJ >=2 and SpellIDsRJ[2] then SpellID = SpellIDsRJ[2]; HealSize = (56+healMod15)*genMod*gonMod end
@@ -861,6 +816,7 @@ function QuickHeal_Command_Druid(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
 
