@@ -73,7 +73,7 @@ function QuickHeal_Shaman_FindChainHealSpellToUse(Target, healType, multiplier, 
 
     -- Calculate healing bonus
     local healModLHW = (1.5/3.5) * Bonus;
-    local healModCH = 0.6142 * Bonus;    
+    local healModCH = 0.6142 * Bonus;    -- The coef fits the 1.18 value from turtle wow patch
     local healMod15 = (1.5/3.5) * Bonus;
     local healMod20 = (2.0/3.5) * Bonus;
     local healMod25 = (2.5/3.5) * Bonus;
@@ -225,7 +225,7 @@ function QuickHeal_Shaman_FindHealSpellToUse(Target, healType, multiplier, force
 
     -- Calculate healing bonus
     local healModLHW = (1.5/3.5) * Bonus;
-    local healModCH = 0.6142 * Bonus;    
+    local healModCH = 0.6142 * Bonus;    -- The coef fits the 1.18 value from turtle wow patch
     local healMod15 = (1.5/3.5) * Bonus;
     local healMod20 = (2.0/3.5) * Bonus;
     local healMod25 = (2.5/3.5) * Bonus;
@@ -379,7 +379,7 @@ function QuickHeal_Shaman_FindHealSpellToUseNoTarget(maxhealth, healDeficit, hea
 
     -- Calculate healing bonus
     local healModLHW = (1.5/3.5) * Bonus;
-    local healModCH = 0.6142 * Bonus;    
+    local healModCH = 0.6142 * Bonus;    -- The coef fits the 1.18 value from turtle wow patch
     local healMod15 = (1.5/3.5) * Bonus;
     local healMod20 = (2.0/3.5) * Bonus;
     local healMod25 = (2.5/3.5) * Bonus;
@@ -621,6 +621,7 @@ function QuickHeal_Command_Shaman(msg)
 
     writeLine("/qh reset - Reset configuration to default parameters for all classes.");
 end
+
 
 
 
