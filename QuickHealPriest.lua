@@ -377,7 +377,7 @@ function QuickHeal_Priest_FindHoTSpellToUse(Target, healType, forceMaxRank)
     if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
         local itemBonus = AceLibrary("ItemBonusLib-1.0")
         Bonus = itemBonus:GetBonus("HEAL") or 0
-        debug(string.format("Equipment Healing Bonus: %d", Bonus))
+        QuickHeal_debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Spiritual Guidance - Increases spell damage and healing by up to 5% (per rank) of your total Spirit.
@@ -549,7 +549,7 @@ function QuickHeal_Priest_FindHoTSpellToUseNoTarget(maxhealth, healDeficit, heal
     if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
         local itemBonus = AceLibrary("ItemBonusLib-1.0")
         Bonus = itemBonus:GetBonus("HEAL") or 0
-        debug(string.format("Equipment Healing Bonus: %d", Bonus))
+        QuickHeal_debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Spiritual Guidance - Increases spell damage and healing by up to 5% (per rank) of your total Spirit.
@@ -679,7 +679,7 @@ function QuickHealSpellID(healneed)
     if (AceLibrary and AceLibrary:HasInstance("ItemBonusLib-1.0")) then
         local itemBonus = AceLibrary("ItemBonusLib-1.0")
         Bonus = itemBonus:GetBonus("HEAL") or 0
-        debug(string.format("Equipment Healing Bonus: %d", Bonus))
+        QuickHeal_debug(string.format("Equipment Healing Bonus: %d", Bonus))
     end
 
     -- Spiritual Guidance - Increases spell damage and healing by up to 5% (per rank) of your total Spirit.
